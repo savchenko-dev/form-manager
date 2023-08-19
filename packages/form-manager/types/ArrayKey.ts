@@ -1,0 +1,1 @@
+export type ArrayKey = number;
