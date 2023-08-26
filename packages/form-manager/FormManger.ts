@@ -29,7 +29,9 @@ export class FormManager<TFieldValues extends FieldValues>
     return this.values$.getValue();
   }
 
-  handleSubmit(handler: () => void): () => void {
-    throw new Error("Method not implemented.");
+  handleSubmit(handler: (data: TFieldValues) => void): () => void {
+    return () => {
+      handler(this.getValues());
+    };
   }
 }

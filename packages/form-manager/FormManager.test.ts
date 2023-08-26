@@ -38,4 +38,18 @@ describe("FormManager", () => {
       role: { name: "guest" },
     });
   });
+
+  test("handle submit works correct", () => {
+    const handleSubmit = jest.fn();
+    const onSumbit = formManager.handleSubmit(handleSubmit);
+
+    onSumbit();
+
+    expect(handleSubmit).toHaveBeenCalledWith({
+      email: "example@mail.com",
+      password: "qwerty",
+      age: 22,
+      role: { name: "guest" },
+    });
+  });
 });
