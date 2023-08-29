@@ -1,11 +1,8 @@
-import {
-  BrowserNativeObject,
-  FieldValues,
-  Primitive,
-} from "react-hook-form/dist/types";
+import { BrowserNativeObject, Primitive } from "react-hook-form";
 
 import { AnyIsEqual } from "./AnyIsEqual";
 import { ArrayKey } from "./ArrayKey";
+import { FieldValues } from "./FieldValues";
 import { IsTuple } from "./IsTuple";
 import { TupleKeys } from "./TupleKeys";
 

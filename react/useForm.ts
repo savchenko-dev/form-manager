@@ -1,12 +1,15 @@
 import { useCallback, useMemo } from "react";
 
-import { FieldValues } from "../form-manager/types/FieldValues";
-import { FormManager } from "../form-manager/FormManger";
+import { FieldValues } from "form-manager/types/FieldValues";
+import { FormManager } from "form-manager/core/FormManger";
 import { FormManagerConfig } from "../form-manager/types/FormManagerConfig";
+import { Resolver } from "form-manager/types/Resolver";
 import { useObservable } from "react-use";
 
 type UseFormConfig<TFieldValues extends FieldValues> = {
-  config: FormManagerConfig<TFieldValues>;
+  config: FormManagerConfig<TFieldValues> & {
+    resolver?: Resolver<TFieldValues>;
+  };
 };
 
 export const useForm = <TFieldValues extends FieldValues>({
@@ -15,6 +18,7 @@ export const useForm = <TFieldValues extends FieldValues>({
   const fm = useMemo(() => new FormManager(config), [config]);
 
   const values = useObservable(fm.values$, config.values);
+  const errors = useObservable(fm.errors$, {});
 
   const handleSubmit = useCallback(
     (...args: Parameters<typeof fm.handleSubmit>) => fm.handleSubmit(...args),
@@ -22,12 +26,15 @@ export const useForm = <TFieldValues extends FieldValues>({
   );
 
   const setValue = useCallback(
-    (...args: Parameters<typeof fm.setValue>) => fm.setValue(...args),
+    (...args: Parameters<typeof fm.setValue>) => {
+      fm.setValue(...args);
+    },
     [fm]
   );
 
   return {
     values,
+    errors,
     handleSubmit,
     setValue,
   };

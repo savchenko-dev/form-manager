@@ -52,4 +52,19 @@ describe("FormManager", () => {
       role: { name: "guest" },
     });
   });
+
+  test("validate works correctly", () => {
+    formManager.validate((values) => {
+      return {
+        values: {},
+        errors: {
+          email: { message: "Email is not valid" },
+        },
+      };
+    });
+
+    expect(formManager.errors$.getValue()).toStrictEqual({
+      email: { message: "Email is not valid" },
+    });
+  });
 });
